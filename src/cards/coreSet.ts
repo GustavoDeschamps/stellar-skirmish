@@ -319,11 +319,18 @@ const machineCult: CardDef[] = [
     scrap: [],
   },
   {
-    id: 'junkyard', name: 'Junkyard', cost: 3,
+    id: 'junkyard', name: 'Junkyard', cost: 6,
     factions: ['cult'], type: 'outpost', defense: 5,
     primary: [{ kind: 'scrapFromHandOrDiscard', upTo: 1 }],
     ally: [],
     scrap: [],
+  },
+  {
+    id: 'battle-station', name: 'Battle Station', cost: 3,
+    factions: ['cult'], type: 'outpost', defense: 5,
+    primary: [],
+    ally: [],
+    scrap: [{ kind: 'combat', amount: 5 }],
   },
 ];
 
@@ -344,8 +351,8 @@ export const coreSetPiles: CardPile[] = [
   { def: tradeFederation[0], count: 3 },  // Federation Shuttle
   { def: tradeFederation[1], count: 3 },  // Cutter
   { def: tradeFederation[2], count: 2 },  // Embassy Yacht
-  { def: tradeFederation[3], count: 3 },  // Freighter
-  { def: tradeFederation[4], count: 2 },  // Trade Escort
+  { def: tradeFederation[3], count: 2 },  // Freighter
+  { def: tradeFederation[4], count: 1 },  // Trade Escort
   { def: tradeFederation[5], count: 1 },  // Flagship
   { def: tradeFederation[6], count: 1 },  // Command Ship
   { def: tradeFederation[7], count: 2 },  // Trading Post
@@ -371,7 +378,7 @@ export const coreSetPiles: CardPile[] = [
   { def: starEmpire[0], count: 3 },  // Imperial Fighter
   { def: starEmpire[1], count: 2 },  // Corvette
   { def: starEmpire[2], count: 3 },  // Survey Ship
-  { def: starEmpire[3], count: 2 },  // Imperial Frigate
+  { def: starEmpire[3], count: 3 },  // Imperial Frigate
   { def: starEmpire[4], count: 1 },  // Battlecruiser
   { def: starEmpire[5], count: 1 },  // Dreadnought
   { def: starEmpire[6], count: 2 },  // Space Station
@@ -385,11 +392,12 @@ export const coreSetPiles: CardPile[] = [
   { def: machineCult[1], count: 3 },  // Missile Bot
   { def: machineCult[2], count: 3 },  // Supply Bot
   { def: machineCult[3], count: 2 },  // Patrol Mech
-  { def: machineCult[4], count: 2 },  // Stealth Needle
+  { def: machineCult[4], count: 1 },  // Stealth Needle
   { def: machineCult[5], count: 1 },  // Battle Mech
   { def: machineCult[6], count: 1 },  // Missile Mech
   { def: machineCult[7], count: 1 },  // Mech World
   { def: machineCult[8], count: 1 },  // Brain World
   { def: machineCult[9], count: 1 },  // Machine Base
-  { def: machineCult[10], count: 2 }, // Junkyard
+  { def: machineCult[10], count: 1 }, // Junkyard
+  { def: machineCult[11], count: 2 }, // Battle Station
 ];
