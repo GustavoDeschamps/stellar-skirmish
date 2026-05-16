@@ -1,5 +1,6 @@
 import { Rocket, Building2, ShieldX } from 'lucide-react';
 import type { CardDef, Effect } from '../../engine/types';
+import CardArt from './CardArt';
 
 const factionColors: Record<string, string> = {
   trade: '#3b82f6',
@@ -94,33 +95,44 @@ export default function CardView({ def, onClick, disabled, highlight, small, cla
           : { borderColor: borderColor as string }
       }
     >
+      {/* Card art background */}
+      <div className="absolute inset-0 rounded-lg overflow-hidden opacity-60">
+        <CardArt
+          cardId={def.id}
+          factions={def.factions}
+          type={def.type}
+          width={small ? 96 : 128}
+          height={small ? 128 : 176}
+        />
+      </div>
+
       {/* Cost badge */}
       <div
-        className="absolute -top-2 -left-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white"
+        className="absolute -top-2 -left-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white z-10"
         style={{ background: factionColors[def.factions[0]] || factionColors.unaligned }}
       >
         {def.cost}
       </div>
 
       {/* Type icon */}
-      <div className="absolute top-1 right-1 opacity-70">
+      <div className="absolute top-1 right-1 opacity-70 z-10">
         <TypeIcon type={def.type} />
       </div>
 
       {/* Defense badge for bases/outposts */}
       {def.defense != null && (
-        <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-600 flex items-center justify-center text-xs font-bold text-white">
+        <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-600 flex items-center justify-center text-xs font-bold text-white z-10">
           {def.defense}
         </div>
       )}
 
       {/* Name */}
-      <div className={`font-bold ${small ? 'text-[10px]' : 'text-xs'} mt-2 leading-tight`}>
+      <div className={`relative z-10 font-bold ${small ? 'text-[10px]' : 'text-xs'} mt-2 leading-tight drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]`}>
         {def.name}
       </div>
 
       {/* Effects */}
-      <div className={`flex-1 overflow-hidden ${small ? 'text-[8px]' : ''}`}>
+      <div className={`relative z-10 flex-1 overflow-hidden ${small ? 'text-[8px]' : ''} drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]`}>
         <EffectSection label="Primary" effects={def.primary} color="#94a3b8" />
         <EffectSection label="Ally" effects={def.ally} color="#fbbf24" />
         <EffectSection label="Scrap" effects={def.scrap} color="#f87171" />

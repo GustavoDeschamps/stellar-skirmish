@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { GameState, Action } from '../engine/types';
+import type { GameState, Action, GameOptions } from '../engine/types';
 import { newGame } from '../engine/setup';
 import { applyAction } from '../engine/reducer';
 import { createRNG } from '../engine/rng';
@@ -14,7 +14,7 @@ interface GameStore {
   hotseatPlayerNames: string[];
 
   setMode: (mode: AppMode) => void;
-  startHotseatGame: (names: string[]) => void;
+  startHotseatGame: (names: string[], options?: Partial<GameOptions>) => void;
   dispatch: (action: Action, actorId?: string) => void;
   clearErrors: () => void;
   setGameState: (state: GameState) => void;
@@ -30,14 +30,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   setMode: (mode) => set({ mode }),
 
-  startHotseatGame: (names) => {
+  startHotseatGame: (names, options) => {
     const rng = createRNG();
     const playerInfos = names.map((name, i) => ({
       id: `player-${i}`,
       name,
       avatar: ['🚀', '⭐', '🌙', '🪐', '☄️', '🌌', '🔭', '💫'][i] || '🎮',
     }));
-    const state = newGame(playerInfos, rng);
+    const state = newGame(playerInfos, rng, options);
     set({
       gameState: state,
       localPlayerId: 'player-0',

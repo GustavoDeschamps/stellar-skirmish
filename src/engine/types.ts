@@ -98,4 +98,12 @@ export interface ActionResult {
   errors?: string[];
 }
 
+export interface GameOptions {
+  startingAuthority: number;
+}
+
+export const DEFAULT_GAME_OPTIONS: GameOptions = {
+  startingAuthority: 50,
+};
+
 export type RNG = () => number;

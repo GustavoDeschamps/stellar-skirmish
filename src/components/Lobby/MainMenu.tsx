@@ -11,6 +11,7 @@ export default function MainMenu() {
   const { startHotseatGame } = useGameStore();
   const [screen, setScreen] = useState<Screen>('main');
   const [playerCount, setPlayerCount] = useState(2);
+  const [startingHealth, setStartingHealth] = useState(50);
   const [names, setNames] = useState(['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6', 'Player 7', 'Player 8']);
 
   const params = new URLSearchParams(window.location.search);
@@ -21,7 +22,7 @@ export default function MainMenu() {
   }, [roomParam]);
 
   function handleStart() {
-    startHotseatGame(names.slice(0, playerCount));
+    startHotseatGame(names.slice(0, playerCount), { startingAuthority: startingHealth });
   }
 
   return (
@@ -66,7 +67,7 @@ export default function MainMenu() {
               ))}
             </div>
           </div>
-          <div className="space-y-2 mb-6">
+          <div className="space-y-2 mb-4">
             {Array.from({ length: playerCount }, (_, i) => (
               <input
                 key={i}
@@ -80,6 +81,23 @@ export default function MainMenu() {
                 placeholder={`Player ${i + 1}`}
               />
             ))}
+          </div>
+          <div className="mb-6">
+            <label className="text-sm text-gray-400 block mb-1">Starting Health: <span className="text-white font-bold">{startingHealth}</span></label>
+            <input
+              type="range"
+              min={10}
+              max={200}
+              step={5}
+              value={startingHealth}
+              onChange={(e) => setStartingHealth(Number(e.target.value))}
+              className="w-full accent-blue-500"
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>10</span>
+              <span>50 (default)</span>
+              <span>200</span>
+            </div>
           </div>
           <div className="flex gap-3">
             <Button variant="ghost" onClick={() => setScreen('main')}>Back</Button>

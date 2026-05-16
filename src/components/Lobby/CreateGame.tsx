@@ -14,6 +14,7 @@ export default function CreateGame({ onBack }: { onBack: () => void }) {
   const [name, setName] = useState('Host');
   const [avatar] = useState('🚀');
   const [creating, setCreating] = useState(false);
+  const [startingHealth, setStartingHealth] = useState(50);
   const { setMode, setGameState, setLocalPlayerId } = useGameStore();
   const { lobby, setLobby, setConnecting, setError, error } = useLobbyStore();
   const { addMessage } = useChatStore();
@@ -42,7 +43,7 @@ export default function CreateGame({ onBack }: { onBack: () => void }) {
   }
 
   function handleStart() {
-    hostRef?.startGame();
+    hostRef?.startGame({ startingAuthority: startingHealth });
   }
 
   const [copied, setCopied] = useState(false);
@@ -86,6 +87,24 @@ export default function CreateGame({ onBack }: { onBack: () => void }) {
           ))}
         </div>
 
+        <div className="mb-4">
+          <label className="text-sm text-gray-400 block mb-1">Starting Health: <span className="text-white font-bold">{startingHealth}</span></label>
+          <input
+            type="range"
+            min={10}
+            max={200}
+            step={5}
+            value={startingHealth}
+            onChange={(e) => setStartingHealth(Number(e.target.value))}
+            className="w-full accent-blue-500"
+          />
+          <div className="flex justify-between text-xs text-gray-500 mt-1">
+            <span>10</span>
+            <span>50 (default)</span>
+            <span>200</span>
+          </div>
+        </div>
+
         <div className="flex gap-3">
           <Button variant="ghost" onClick={() => { hostRef?.destroy(); hostRef = null; setLobby(null); onBack(); }}>
             Cancel
@@ -113,6 +132,23 @@ export default function CreateGame({ onBack }: { onBack: () => void }) {
         className="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white mb-4"
         placeholder="Your name"
       />
+      <div className="mb-4">
+        <label className="text-sm text-gray-400 block mb-1">Starting Health: <span className="text-white font-bold">{startingHealth}</span></label>
+        <input
+          type="range"
+          min={10}
+          max={200}
+          step={5}
+          value={startingHealth}
+          onChange={(e) => setStartingHealth(Number(e.target.value))}
+          className="w-full accent-blue-500"
+        />
+        <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <span>10</span>
+          <span>50 (default)</span>
+          <span>200</span>
+        </div>
+      </div>
       <div className="flex gap-3">
         <Button variant="ghost" onClick={onBack}>Back</Button>
         <Button className="flex-1" onClick={handleCreate} disabled={creating || !name.trim()}>

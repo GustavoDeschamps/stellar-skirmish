@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import type { GameState, Action } from '../engine/types';
+import type { GameState, Action, GameOptions } from '../engine/types';
 import { applyAction } from '../engine/reducer';
 import { newGame } from '../engine/setup';
 import { createRNG } from '../engine/rng';
@@ -19,7 +19,7 @@ interface HostState {
 export interface HostController {
   state: HostState;
   roomCode: string;
-  startGame: () => void;
+  startGame: (options?: Partial<GameOptions>) => void;
   destroy: () => void;
 }
 
@@ -184,14 +184,14 @@ export async function createHostController(
   return {
     state: hs,
     roomCode,
-    startGame: () => {
+    startGame: (options) => {
       if (hs.lobby.players.length < 2) {
         onError('Need at least 2 players');
         return;
       }
       const rng = createRNG();
       const playerInfos = hs.lobby.players.map(p => ({ id: p.id, name: p.name, avatar: p.avatar }));
-      hs.gameState = newGame(playerInfos, rng);
+      hs.gameState = newGame(playerInfos, rng, options);
 
       for (const [connId, playerId] of hs.connToPlayer) {
         const redacted = redactStateForPlayer(hs.gameState, playerId);
