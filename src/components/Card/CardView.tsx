@@ -1,6 +1,5 @@
 import { Rocket, Building2, ShieldX } from 'lucide-react';
 import type { CardDef, Effect } from '../../engine/types';
-import CardArt from './CardArt';
 
 const factionColors: Record<string, string> = {
   trade: '#3b82f6',
@@ -96,13 +95,12 @@ export default function CardView({ def, onClick, disabled, highlight, small, cla
       }
     >
       {/* Card art background */}
-      <div className="absolute inset-0 rounded-lg overflow-hidden opacity-60">
-        <CardArt
-          cardId={def.id}
-          factions={def.factions}
-          type={def.type}
-          width={small ? 96 : 128}
-          height={small ? 128 : 176}
+      <div className="absolute inset-0 rounded-lg overflow-hidden">
+        <img
+          src={`/cards/${def.id}.png`}
+          alt=""
+          className="w-full h-full object-cover opacity-70"
+          loading="lazy"
         />
       </div>
 
